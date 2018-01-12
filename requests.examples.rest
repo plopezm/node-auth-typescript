@@ -12,10 +12,6 @@ content-type: application/json
 
 GET http://localhost:8080/api/users/testing
 
-###
-
-GET http://localhost:8080/api/users/testing
-
 ### Update
 
 PUT http://localhost:8080/api/users/testing
@@ -25,3 +21,7 @@ content-type: application/json
     "username": "plopezm",
     "password": "password"
 }
+
+###
+
+GET http://localhost:8080/api/users/plopezm
