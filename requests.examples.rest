@@ -14,7 +14,7 @@ GET http://localhost:8080/api/users/testing
 
 ###
 
-GET http://localhost:8080/api/users/pablo
+GET http://localhost:8080/api/users/testing
 
 ### Update
 
@@ -22,6 +22,6 @@ PUT http://localhost:8080/api/users/testing
 content-type: application/json
 
 {
-    "username": "pablo",
+    "username": "plopezm",
     "password": "password"
 }
