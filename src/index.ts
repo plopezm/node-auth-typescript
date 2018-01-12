@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
-import { InjectionFactory } from '../../inject/dist/index';
-import { Server } from "../../decorated-express/dist/index";
+import { InjectionFactory } from '@plopezm/tsinject';
+import { Server } from "@plopezm/decorated-express";
 import { UserService } from './services/user.service';
 import { UserResource } from "./resources/user.resource";
 

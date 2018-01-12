@@ -10,8 +10,8 @@
   "author": "Pablo <pabloplm@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@plopezm/decorated-express": "0.0.7",
-    "@plopezm/tsinject": "0.0.5",
+    "@plopezm/decorated-express": "1.0.0",
+    "@plopezm/tsinject": "1.0.0",
     "typegoose": "^3.8.0"
   },
   "devDependencies": {

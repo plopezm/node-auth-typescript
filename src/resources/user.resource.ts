@@ -1,8 +1,7 @@
 import * as express from "express";
-import { Inject } from "../../../inject/dist/index";
-import { GET, POST, DELETE } from "../../../decorated-express/dist/index";
+import { Inject } from "@plopezm/tsinject";
+import { GET, POST, DELETE, PUT } from "@plopezm/decorated-express";
 import { UserService } from "../services/user.service";
-import { PUT } from "../../../decorated-express/dist/decorations/resource.decoration";
 
 export class UserResource {
 
