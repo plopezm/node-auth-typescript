@@ -1,0 +1,27 @@
+###
+
+POST http://localhost:8080/api/users
+content-type: application/json
+
+{
+    "username": "testing",
+    "password": "Testing"
+}
+
+###
+
+GET http://localhost:8080/api/users/testing
+
+###
+
+GET http://localhost:8080/api/users/pablo
+
+### Update
+
+PUT http://localhost:8080/api/users/testing
+content-type: application/json
+
+{
+    "username": "pablo",
+    "password": "password"
+}
