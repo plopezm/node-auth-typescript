@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 import { InjectionFactory } from '@plopezm/tsinject';
-import { Server } from "@plopezm/decorated-express";
+//import { Server } from "@plopezm/decorated-express";
+import { Server } from "../../decorated-express/dist/index";
 import { UserService } from './services/user.service';
 import { UserResource } from "./resources/user.resource";
 
@@ -10,4 +11,4 @@ mongoose.connect('mongodb://localhost:27017/auth', { useMongoClient: true});
 
 let server = Server.bootstrap();
 server.registerResource(UserResource);
-server.start(8080);
+server.start("/api", 8080);
