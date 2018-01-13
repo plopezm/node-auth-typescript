@@ -1,7 +1,18 @@
 import * as express from "express";
 import { Inject } from "@plopezm/tsinject";
-import { GET, POST, DELETE, PUT } from "@plopezm/decorated-express";
+import { GET, POST, DELETE, PUT, Middlewares } from "@plopezm/decorated-express";
+//import { GET, POST, DELETE, PUT, Middlewares } from  "../../../decorated-express/dist/index";
 import { UserService } from "../services/user.service";
+
+function sayHelloWorld1(req: express.Request, res: express.Response, next: Function) {
+    console.log("Hello world middleware 1");
+    next();
+}
+
+function sayHelloWorld2(req: express.Request, res: express.Response, next: Function) {
+    console.log("Hello world middleware 2");
+    next();
+}
 
 export class UserResource {
 
@@ -10,8 +21,9 @@ export class UserResource {
 
     constructor(){
     }
-
+        
     @GET("/users/:username")
+    @Middlewares(sayHelloWorld1, sayHelloWorld2)
     findUser(req: express.Request, res: express.Response, next: Function){
         let id = req.params.username;
         let userPromise = this.userService.get(id);
@@ -46,6 +58,22 @@ export class UserResource {
     updateUser(req: express.Request, res: express.Response, next: Function) {
         let id = req.params.username;
         let userPromise = this.userService.update(id, req.body);
+        userPromise.then((user) => {
+            if(!user){
+                res.status(404);
+                res.json({code: 404, msg: "NOT_FOUND"});
+                return;
+            }
+            res.json(req.body);
+        }).catch((err) => {
+            res.json(err);
+        });
+    }
+
+    @DELETE("/users/:username")
+    deleteUser(req: express.Request, res: express.Response, next: Function) {
+        let id = req.params.username;
+        let userPromise = this.userService.remove(id);
         userPromise.then((user) => {
             if(!user){
                 res.status(404);

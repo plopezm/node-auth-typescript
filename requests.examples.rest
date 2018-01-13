@@ -10,6 +10,10 @@ content-type: application/json
 
 ###
 
+DELETE http://localhost:8080/api/users/testing
+
+###
+
 GET http://localhost:8080/api/users/testing
 
 ### Update

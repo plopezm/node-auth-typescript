@@ -24,4 +24,10 @@ export class UserService {
         return userUpdated;
     }
 
+    async remove(id: string): Promise<User> {
+        let query = { username: id };
+        let userRemoved = await UserModel.remove(query)
+        return userRemoved;
+    }
+
 }
