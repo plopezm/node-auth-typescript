@@ -7,7 +7,11 @@ import { UserResource } from "./resources/user.resource";
 
 InjectionFactory.register(UserService);
 
-mongoose.connect('mongodb://localhost:27017/auth', { useMongoClient: true});
+mongoose.connect('mongodb://localhost:27017/auth', { useMongoClient: true})
+    .catch((err) => {
+        console.log(err);
+        process.exit();
+    });
 
 let server = Server.bootstrap();
 server.registerResource(UserResource);
