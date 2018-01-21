@@ -20,6 +20,9 @@ export class UserResource {
     @Inject()
     userService: UserService;
 
+    @Inject("UserServiceFactory")
+    userServiceFromFactory: UserService;
+
     constructor(){
     }
 
