@@ -1,10 +1,9 @@
 import { UserModel, User } from "../models/user.model";
 import { InstanceType } from "typegoose";
+//import { Produces } from "../../../inject/dist/core/inject";
+import { Produces } from "@plopezm/tsinject";
 
 export class UserService {
-
-    users: any = {};
-
     constructor(){
     }
 
@@ -28,6 +27,20 @@ export class UserService {
         let query = { username: id };
         let userRemoved = await UserModel.remove(query)
         return userRemoved;
+    }
+
+}
+
+export class UserServiceFactory {
+
+    protected static userServiceFactory: UserService;
+
+    @Produces("UserServiceFactory")
+    static getInstance(): UserService {
+        if (!UserServiceFactory.userServiceFactory){
+            UserServiceFactory.userServiceFactory = new UserService();
+        }
+        return UserServiceFactory.userServiceFactory;
     }
 
 }

@@ -15,6 +15,16 @@ DELETE http://localhost:8080/api/users/testing
 ###
 
 GET http://localhost:8080/api/users/testing
+Authorization: Basic dGVzdGluZzp0ZXN0aW5n
+
+###
+
+GET http://localhost:8080/api/users/testing
+Authorization: Bearer dGVzdGluZzp0ZXN0aW5n
+
+###
+
+GET http://localhost:8080/api/users/testing
 
 ### Update
 

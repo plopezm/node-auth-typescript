@@ -1,7 +1,8 @@
 import * as express from "express";
 import { Inject } from "@plopezm/tsinject";
-import { GET, POST, DELETE, PUT, Middlewares } from "@plopezm/decorated-express";
-//import { GET, POST, DELETE, PUT, Middlewares } from  "../../../decorated-express/dist/index";
+//import { Inject } from '../../../inject/dist/index';
+import { GET, POST, DELETE, PUT, Middlewares, BasicAuth } from "@plopezm/decorated-express";
+//import { GET, POST, DELETE, PUT, Middlewares, BasicAuth } from  "../../../decorated-express/dist/index";
 import { UserService } from "../services/user.service";
 
 function sayHelloWorld1(req: express.Request, res: express.Response, next: Function) {
@@ -16,13 +17,18 @@ function sayHelloWorld2(req: express.Request, res: express.Response, next: Funct
 
 export class UserResource {
 
-    @Inject
+    @Inject()
     userService: UserService;
 
     constructor(){
     }
+
+    static isUserValid(user: string, passwd: string): boolean{
+        return true;
+    }
         
     @GET("/users/:username")
+    @BasicAuth(UserResource.isUserValid)
     @Middlewares(sayHelloWorld1, sayHelloWorld2)
     findUser(req: express.Request, res: express.Response, next: Function){
         let id = req.params.username;
