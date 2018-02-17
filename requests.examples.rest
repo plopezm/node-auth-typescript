@@ -1,28 +1,28 @@
-###
+### Creating testing user
 
 POST http://localhost:8080/api/users
 content-type: application/json
 
 {
     "username": "testing",
-    "password": "Testing"
+    "password": "testing"
 }
 
-###
+### Removing testing user
 
 DELETE http://localhost:8080/api/users/testing
 
-###
+### Login into microservice to get user
 
-GET http://localhost:8080/api/users/testing
+GET http://localhost:8080/api/login
 Authorization: Basic dGVzdGluZzp0ZXN0aW5n
 
-###
+### Sending get using using jwt token
 
 GET http://localhost:8080/api/users/testing
-Authorization: Bearer dGVzdGluZzp0ZXN0aW5n
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RpbmciLCJpYXQiOjE1MTg4NzQ0MDQsImV4cCI6MTUxODg3NDQxOX0.rYdEetOYNaQ0a1GK2XmQnZMFZnriyN_ZHdjYmlyoyt4
 
-###
+### Unauthorized because header not found
 
 GET http://localhost:8080/api/users/testing
 
@@ -32,10 +32,9 @@ PUT http://localhost:8080/api/users/testing
 content-type: application/json
 
 {
-    "username": "plopezm",
+    "username": "testing",
     "password": "password"
 }
 
 ###
 
-GET http://localhost:8080/api/users/plopezm

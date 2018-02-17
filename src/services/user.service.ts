@@ -1,46 +1,40 @@
-import { UserModel, User } from "../models/user.model";
-import { InstanceType } from "typegoose";
-//import { Produces } from "../../../inject/dist/core/inject";
 import { Produces } from "@plopezm/tsinject";
+//import { Produces } from "../../../inject/dist/core/inject";
+
+import { UserModel, IUserModel } from "../models/user.model";
 
 export class UserService {
     constructor(){
     }
 
-    async get(username: string): Promise<User> {
-        let user = await UserModel.findByUsername(username);
-        return user;
+    static validateUser = (username: string, passwd: string): Promise<boolean> => {
+        return UserModel.findOne({username: username, password: passwd}).exec()
+        .then((user: IUserModel | null) => {
+            return user !== null;
+        });
     }
 
-    async create(user: User): Promise<User> {
-        let userCreated = await UserModel.create(user);
-        return userCreated;
+    getByUsername(username: string): Promise<IUserModel | null>{
+        return UserModel.findOne({username: username}).exec();
     }
 
-    async update(id: string, user: User): Promise<User> {
+    getByUsernameAndPassword(username: string, password: string): Promise<IUserModel | null>{
+        return UserModel.findOne({username: username, password: password}).exec();
+    }
+
+    create(user: IUserModel): Promise<IUserModel> {
+        let newUser = new UserModel(user);
+        return newUser.save();
+    }
+
+    update(id: string, user: IUserModel): Promise<IUserModel | null> {
         let query = { username: id };
-        let userUpdated = await UserModel.findOneAndUpdate(query, user);
-        return userUpdated;
+        return UserModel.findOneAndUpdate(query, user).exec();        
     }
 
-    async remove(id: string): Promise<User> {
+    remove(id: string): Promise<void>{
         let query = { username: id };
-        let userRemoved = await UserModel.remove(query)
-        return userRemoved;
-    }
-
-}
-
-export class UserServiceFactory {
-
-    protected static userServiceFactory: UserService;
-
-    @Produces("UserServiceFactory")
-    static getInstance(): UserService {
-        if (!UserServiceFactory.userServiceFactory){
-            UserServiceFactory.userServiceFactory = new UserService();
-        }
-        return UserServiceFactory.userServiceFactory;
+        return UserModel.remove(query).exec();
     }
 
 }

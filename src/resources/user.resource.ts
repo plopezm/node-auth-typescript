@@ -1,9 +1,11 @@
 import * as express from "express";
+
 import { Inject } from "@plopezm/tsinject";
 //import { Inject } from '../../../inject/dist/index';
-import { GET, POST, DELETE, PUT, Middlewares, BasicAuth } from "@plopezm/decorated-express";
-//import { GET, POST, DELETE, PUT, Middlewares, BasicAuth } from  "../../../decorated-express/dist/index";
+ import { GET, POST, DELETE, PUT, Middlewares, BasicAuth, JWTAuth, JWTFactory, SignOptions, BasicData } from "@plopezm/decorated-express";
+// import { GET, POST, DELETE, PUT, Middlewares, BasicAuth, JWTFactory, JWTAuth, SignOptions, BasicData } from  "../../../decorated-express/dist/index";
 import { UserService } from "../services/user.service";
+import { IUserModel } from "../models/user.model";
 
 function sayHelloWorld1(req: express.Request, res: express.Response, next: Function) {
     console.log("Hello world middleware 1");
@@ -20,22 +22,30 @@ export class UserResource {
     @Inject()
     userService: UserService;
 
-    @Inject("UserServiceFactory")
-    userServiceFromFactory: UserService;
-
     constructor(){
     }
 
-    static isUserValid(user: string, passwd: string): boolean{
-        return true;
+    @GET("/login")
+    @BasicAuth(UserService.validateUser)
+    login(req: express.Request, res: express.Response, next: Function){
+        let basicAuthUser: BasicData = res.locals.auth.basic;
+
+        let signOptions: SignOptions = {
+            expiresIn: 15
+        };
+        let token = JWTFactory.generateToken("secret",
+            {username: basicAuthUser.username}, signOptions);
+        res.json({status: 80, token: token});
     }
         
     @GET("/users/:username")
-    @BasicAuth(UserResource.isUserValid)
     @Middlewares(sayHelloWorld1, sayHelloWorld2)
+    @JWTAuth("secret", { algorithm: 'HS512' })
     findUser(req: express.Request, res: express.Response, next: Function){
         let id = req.params.username;
-        let userPromise = this.userService.get(id);
+        let jwtPayload = res.locals.auth.jwt;
+        console.log(jwtPayload);
+        let userPromise = this.userService.getByUsername(id);
         userPromise.then((user) => {
             if(!user){
                 res.status(404);
