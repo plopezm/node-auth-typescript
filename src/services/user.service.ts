@@ -1,6 +1,3 @@
-import { Produces } from "@plopezm/tsinject";
-//import { Produces } from "../../../inject/dist/core/inject";
-
 import { UserModel, IUserModel } from "../models/user.model";
 
 export class UserService {

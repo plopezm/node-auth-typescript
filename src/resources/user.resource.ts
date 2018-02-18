@@ -1,7 +1,7 @@
 import * as express from "express";
 
 import { Inject } from "@plopezm/tsinject";
-//import { Inject } from '../../../inject/dist/index';
+// import { Inject } from '../../../inject/dist/index';
  import { GET, POST, DELETE, PUT, Middlewares, BasicAuth, JWTAuth, JWTFactory, SignOptions, BasicData } from "@plopezm/decorated-express";
 // import { GET, POST, DELETE, PUT, Middlewares, BasicAuth, JWTFactory, JWTAuth, SignOptions, BasicData } from  "../../../decorated-express/dist/index";
 import { UserService } from "../services/user.service";

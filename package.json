@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@plopezm/decorated-express": "1.2.3",
-    "@plopezm/tsinject": "1.1.0",
+    "@plopezm/tsinject": "1.2.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "mongoose": "^5.0.6",
